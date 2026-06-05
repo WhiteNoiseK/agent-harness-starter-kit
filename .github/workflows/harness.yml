@@ -50,12 +50,28 @@ jobs:
         run: python -m black --check "${SRC_ROOT}" "${TESTS_ROOT}"
 
       - name: Type check (mypy strict)
-        run: python -m mypy --strict --explicit-package-bases --ignore-missing-imports "${SRC_ROOT}"
+        # Skeleton-aware: a freshly-cloned kit ships src/ empty (only .gitkeep). mypy errors out
+        # ("no .py[i] files in directory") on an empty tree, so skip until source exists — the gate
+        # auto-activates the moment you add a .py under src/.
+        run: |
+          if [ -n "$(find "${SRC_ROOT}" -name '*.py' -print -quit)" ]; then
+            python -m mypy --strict --explicit-package-bases --ignore-missing-imports "${SRC_ROOT}"
+          else
+            echo "::notice title=mypy deferred::${SRC_ROOT}/ has no .py files yet (fresh skeleton) — type-check gate activates once you add source."
+          fi
 
       - name: Tests + coverage
         # --cov is a DOTTED module path (${SRC_PKG}) — no file paths (prevents a false 0%, drift fix).
-        run: >-
-          python -m pytest "${TESTS_ROOT}"
-          --cov="${SRC_PKG}"
-          --cov-report=term-missing
-          --cov-fail-under="${COV_FAIL_UNDER}"
+        # Skeleton-aware: with src/ empty the coverage floor is mathematically unreachable (0%), so the
+        # harness self-tests still run but without --cov-fail-under until source exists. Once src/ has
+        # a .py, the full ${COV_FAIL_UNDER}% coverage gate is enforced.
+        run: |
+          if [ -n "$(find "${SRC_ROOT}" -name '*.py' -print -quit)" ]; then
+            python -m pytest "${TESTS_ROOT}" \
+              --cov="${SRC_PKG}" \
+              --cov-report=term-missing \
+              --cov-fail-under="${COV_FAIL_UNDER}"
+          else
+            echo "::notice title=coverage gate deferred::${SRC_ROOT}/ has no .py files yet — running tests without the ${COV_FAIL_UNDER}% coverage floor until source is added."
+            python -m pytest "${TESTS_ROOT}"
+          fi

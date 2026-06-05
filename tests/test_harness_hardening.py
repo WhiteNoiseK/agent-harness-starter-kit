@@ -113,7 +113,9 @@ def _run_verify(
 def test_full_suite_failure_does_not_flip_status(tmp_path: Path) -> None:
     """module-scope gates pass + full-suite fails → STATUS pass (out-of-scope regression isolated)."""
     if not VERIFY_SCRIPT.exists():
-        pytest.skip("harness_run_verify.sh not present — verified after gate-engine deployment")
+        pytest.skip(
+            "harness_run_verify.sh not present — verified after gate-engine deployment"
+        )
     data = _run_verify(
         tmp_path,
         subset=_PASS_SUBSET,
@@ -122,14 +124,18 @@ def test_full_suite_failure_does_not_flip_status(tmp_path: Path) -> None:
         ruff=_PASS_RUFF,
         full=_FAIL_FULL,
     )
-    assert data["status"] == "pass", "a full-suite failure flipped the module-scope STATUS"
+    assert (
+        data["status"] == "pass"
+    ), "a full-suite failure flipped the module-scope STATUS"
 
 
 @pytest.mark.unit
 def test_subset_failure_still_flips_status(tmp_path: Path) -> None:
     """a module-scope subset failure still yields STATUS fail (prevents neutralizing the close gate)."""
     if not VERIFY_SCRIPT.exists():
-        pytest.skip("harness_run_verify.sh not present — verified after gate-engine deployment")
+        pytest.skip(
+            "harness_run_verify.sh not present — verified after gate-engine deployment"
+        )
     data = _run_verify(
         tmp_path,
         subset="printf '6 passed\\n1 failed\\n'",
@@ -145,7 +151,9 @@ def test_subset_failure_still_flips_status(tmp_path: Path) -> None:
 def test_collection_error_flips_status(tmp_path: Path) -> None:
     """if the subset has a collection error ('N error', no 'failed'), STATUS fail (blocks false positives)."""
     if not VERIFY_SCRIPT.exists():
-        pytest.skip("harness_run_verify.sh not present — verified after gate-engine deployment")
+        pytest.skip(
+            "harness_run_verify.sh not present — verified after gate-engine deployment"
+        )
     data = _run_verify(
         tmp_path,
         subset="printf '0 passed\\n'; printf '1 error in 0.10s\\n'",
@@ -168,7 +176,9 @@ def test_audit_guard_rejects_fake_and_chained_cmds() -> None:
     verify.json → the guard reruns the echo and passes).
     """
     if not AUDIT_GUARD.exists():
-        pytest.skip("harness_audit_rerun.py not present — verified after gate-engine deployment")
+        pytest.skip(
+            "harness_audit_rerun.py not present — verified after gate-engine deployment"
+        )
     # The guard reads .harness.toml via the runtime config loader (_harness_config) but works on
     # defaults even if the file is missing, so it must always be importable regardless of whether
     # init ran. (The first kit's placeholder-substitution dependency is removed — no more pre-substitution skip.)
@@ -254,7 +264,9 @@ def test_timeout_kills_hanging_test(tmp_path: Path) -> None:
     assert (
         "unrecognized arguments" not in combined
     ), "pytest-timeout not installed (--timeout unrecognized)"
-    assert "Timeout" in combined and "Stack of" in combined, "timeout force-kill did not work"
+    assert (
+        "Timeout" in combined and "Stack of" in combined
+    ), "timeout force-kill did not work"
 
 
 # ── phantom-script-name prevention — confirm cited script paths exist ────
@@ -273,7 +285,9 @@ def _cited_script_paths() -> list[str]:
 def test_quality_gates_spec_present() -> None:
     """docs/_harness/quality-gates.md must exist (source of gate thresholds/schema)."""
     if not QUALITY_GATES_SPEC.exists():
-        pytest.skip("quality-gates.md not present — verified after gate-engine deployment")
+        pytest.skip(
+            "quality-gates.md not present — verified after gate-engine deployment"
+        )
     assert QUALITY_GATES_SPEC.is_file()
 
 
