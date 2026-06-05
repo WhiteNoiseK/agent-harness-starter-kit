@@ -264,9 +264,14 @@ def test_timeout_kills_hanging_test(tmp_path: Path) -> None:
     assert (
         "unrecognized arguments" not in combined
     ), "pytest-timeout not installed (--timeout unrecognized)"
+    # pytest-timeout prints "Failed: Timeout (>1.0s) from pytest-timeout." on every platform.
+    # The "+++ Stack of thread ... +++" dump is emitted ONLY by the thread method (the Windows
+    # fallback when SIGALRM is unavailable); the Linux/CI default is the signal method, which has
+    # no stack dump — so asserting on "Stack of" passes on Windows yet fails on Linux. The portable
+    # evidence of a force-kill is the Timeout marker plus the non-zero return code asserted above.
     assert (
-        "Timeout" in combined and "Stack of" in combined
-    ), "timeout force-kill did not work"
+        "Timeout" in combined
+    ), "timeout force-kill did not work (no pytest-timeout Timeout marker)"
 
 
 # ── phantom-script-name prevention — confirm cited script paths exist ────
