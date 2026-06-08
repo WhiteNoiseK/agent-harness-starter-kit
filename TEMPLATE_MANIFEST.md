@@ -67,6 +67,8 @@ Status legend: **AS-IS** use as-is · **PARAM** placeholder substitution needed 
 | `docs/_field_cascade.md` | Field→document dependency map (auto when a spec appears) | EMPTY |
 | `scripts/foam_catalog.py` | `_recent`/`_authority` generator (parses CLAUDE.md §8) | AS-IS |
 | `scripts/field_cascade.py` | `_field_cascade` generator — **auto-discovers spec paths** (removes the original project's hardcoding) | PARAM |
+| `mkdocs.yml` + `scripts/build_docs_portal.py` | **Human-review docs portal** — renders `docs/` md → searchable HTML (Material theme, auto-nav). md stays SSOT; `site/` gitignored | AS-IS |
+| `docs/PORTAL_README.md` · `requirements-docs.txt` · `docs/.pages` | Portal usage/limits · portal-only deps (not runtime) · auto-nav top ordering | AS-IS |
 
 ## E. Empty Phase-Deliverable Templates (`docs/ai-workflow/`)
 

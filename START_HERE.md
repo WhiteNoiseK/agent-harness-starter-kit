@@ -77,3 +77,4 @@ Start with the §3.0 prerequisite check first, and if any MCP/skill is missing, 
 - AI tooling (MCP/skills) install: [docs/ai-tooling/AI_TOOLING.md](docs/ai-tooling/AI_TOOLING.md)
 - Per-environment optimization: [docs/ENVIRONMENTS.md](docs/ENVIRONMENTS.md)
 - **Multi-agent collaboration (independent review — e.g. Claude ↔ Codex)**: [docs/ai-workflow/codex_claude_review_protocol.md](docs/ai-workflow/codex_claude_review_protocol.md) · activate via `.harness.toml [review_overlay]`
+- **Human-review docs portal (md → HTML)**: `python scripts/build_docs_portal.py --serve` → http://localhost:8000 ([docs/PORTAL_README.md](docs/PORTAL_README.md)). Auto-nav, so new docs show up without config edits.

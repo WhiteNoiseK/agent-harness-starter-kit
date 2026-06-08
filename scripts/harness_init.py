@@ -404,6 +404,7 @@ def main() -> int:
     print("=" * 60)
     print("  INIT complete" + (" (dry-run — no actual changes)" if args.dry_run else ""))
     print("  Next: pytest tests/test_harness_hardening.py  (post-clone acceptance test)")
+    print("  Docs (human review): pip install -r requirements-docs.txt && python scripts/build_docs_portal.py --serve")
     print("=" * 60)
     return 0
 

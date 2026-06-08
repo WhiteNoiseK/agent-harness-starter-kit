@@ -8,6 +8,9 @@
 - **[Authority registry](_authority.md)** — single-authority documents (content authority is owned by [.claude/CLAUDE.md](../.claude/CLAUDE.md) §8)
 - **[Field dependency map](_field_cascade.md)** — spec column → the documents that use that field (cascade tracking)
 
+> 👀 **Reading this as a human?** Render the whole knowledge base to a searchable HTML site:
+> `python scripts/build_docs_portal.py --serve` → http://localhost:8000 (see [PORTAL_README.md](PORTAL_README.md)). md stays the source; HTML is generated.
+
 ## 📁 Domains (folder = classification axis)
 
 > Below is the **kit's default skeleton**. When you add a project domain folder, register it here as a single line
