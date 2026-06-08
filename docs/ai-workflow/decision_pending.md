@@ -17,10 +17,13 @@
 <!-- Present options as a table. However, do NOT present a value already defined by a single-authority spec as an option
      (it is to be followed; if code ≠ spec, the code is wrong). Only ask about what is open (process/wiring/spec refinement). -->
 
-| Option | Content | Stability | Maintainability | Code Visibility |
-|:---|:---|:---|:---|:---|
-| A | <option A> | <assessment> | <assessment> | <assessment> |
-| B | <option B> | <assessment> | <assessment> | <assessment> |
+| Option | Content | Stability | Maintainability | Code Visibility | Security |
+|:---|:---|:---|:---|:---|:---|
+| A | <option A> | <assessment> | <assessment> | <assessment> | <assessment> |
+| B | <option B> | <assessment> | <assessment> | <assessment> | <assessment> |
+
+<!-- 4-axis scorecard per docs/pm-guide/recommendation_policy.md §1 (Security = attack surface / input validation / secret exposure). -->
+
 
 **Blocked task**: <M-task ID>
 

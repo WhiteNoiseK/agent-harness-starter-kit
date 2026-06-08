@@ -6,9 +6,9 @@
 
 ---
 
-## 1. Recommendation (Proposal) Rules — A 3-Column Evaluation Table Is Required
+## 1. Recommendation (Proposal) Rules — A 4-Column Evaluation Table Is Required
 
-When presenting options/approaches, you **must** present them as an evaluation table on the 3 criteria below.
+When presenting options/approaches, you **must** present them as an evaluation table on the 4 criteria below.
 **Do not use intuitive/subjective phrasing alone** — like "more natural flow" or "cleaner" — use only axes with evidence.
 
 | Criterion | What it looks at |
@@ -16,15 +16,17 @@ When presenting options/approaches, you **must** present them as an evaluation t
 | **Stability** | Error likelihood, risk of data loss/race conditions, recoverability. In a hard-to-access/high-availability environment, **weighted highest**. |
 | **Maintainability** | Ease of change, coupling/cohesion, testability, single-source compliance. |
 | **Visibility** | Can a non-specialist (mechanical/electrical/field QA/subcontractor) read it? Flat structure, sufficient comments/docstrings. |
+| **Security** | Attack surface, input-validation/boundary handling, secret/credential exposure, injection & authN/authZ risk. Even for a proposal, weigh whether it widens the attack surface or leaks data. |
 
 Example format:
 
-| Option | Stability | Maintainability | Visibility | Notes |
-|:--|:--|:--|:--|:--|
-| A. … | High — failure paths isolated | Medium — 1 module | High — guard clause | Recommended |
-| B. … | Medium | High | Medium | |
+| Option | Stability | Maintainability | Visibility | Security | Notes |
+|:--|:--|:--|:--|:--|:--|
+| A. … | High — failure paths isolated | Medium — 1 module | High — guard clause | High — no new surface | Recommended |
+| B. … | Medium | High | Medium | Medium — adds an endpoint | |
 
-> Default priority: **stability > recoverability > visibility > maintainability > performance** (adjust per project NFR in `.harness.toml` or the charter).
+> Default priority: **stability > recoverability > security > visibility > maintainability > performance** (adjust per project NFR in `.harness.toml` or the charter — e.g. security rises toward the top for networked/multi-user/data-sensitive systems).
+> The **release-blocking** counterpart of the Security axis is [Gate S — Pre-deployment Security Audit](security_gate.md).
 
 ## 2. Single-Authority Values Are Not Options
 

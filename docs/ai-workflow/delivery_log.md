@@ -37,6 +37,24 @@
 - [ ] Error handling verified
 - [ ] No performance/security issues
 
+#### Gate S — Pre-deployment Security Audit (release-blocking)
+
+> Whole-system security pass per [`../pm-guide/security_gate.md`](../pm-guide/security_gate.md). Production `[RELEASE APPROVED]` must cite a passed Gate S for this verification number.
+
+| Item | Result | Evidence (command output / file:line / "N/A — reason") |
+|------|------|------|
+| Secrets scan (full tree) | ✅ / ❌ / N/A | |
+| Dependency vulnerability scan | ✅ / ❌ / N/A | |
+| Input/boundary validation | ✅ / ❌ / N/A | |
+| AuthN / AuthZ | ✅ / ❌ / N/A | |
+| Injection & output (SQL/shell/XSS/CSRF) | ✅ / ❌ / N/A | |
+| Error/log leakage | ✅ / ❌ / N/A | |
+| Transport / storage / rate limiting | ✅ / ❌ / N/A | |
+| Attack surface (prod profile) | ✅ / ❌ / N/A | |
+| 0 deferred CRITICAL/HIGH from per-task Stage 4 | ✅ / ❌ | |
+
+- **Gate S verdict**: ⬜ PASS / ⬜ FAIL — signed off by: ______  (accepted-risk notes, if any: ______)
+
 #### Notes
 
 <!-- Record problems found, observations, follow-up items. If none, "(none)". -->

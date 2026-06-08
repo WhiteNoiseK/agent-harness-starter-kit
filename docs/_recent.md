@@ -2,10 +2,11 @@
 
 # Most-recent-first catalog (context re-orientation entry point)
 
-> 42 documents total · most-recent first. Date-source priority: updated > created > filename > git > mtime. ⭐ = authority (§8) · 🚫 = deprecated (do not reference in operations)
+> 43 documents total · most-recent first. Date-source priority: updated > created > filename > git > mtime. ⭐ = authority (§8) · 🚫 = deprecated (do not reference in operations)
 
 | Date | Source | Domain | Document |
 |:---|:---:|:---|:---|
+| 2026-06-08 | updated | pm-guide | [pm-guide/security_gate.md](pm-guide/security_gate.md) |
 | 2026-06-04 | git | retrospective | [retrospective/lessons_learned.md](retrospective/lessons_learned.md) |
 | 2026-06-04 | git | pm-guide | [pm-guide/recommendation_policy.md](pm-guide/recommendation_policy.md) |
 | 2026-06-04 | git | pm-guide | [pm-guide/lifecycle-standard.md](pm-guide/lifecycle-standard.md) |

@@ -42,8 +42,8 @@ This standard fuses three things into one:
             [S4 EXECUTING]  ←──┐   ← harness 6-stage gate loop (per task)
                  │ (per-task)  │
             [S5 MONITOR&CTRL] ─┘   ← cross-cutting control (progress/scores/audit)
-                 │ Gate D
-            [S6 CLOSING/DELIVERY]  ← delivery_log + [RELEASE APPROVED] + deployment_log
+                 │ Gate D → Gate S
+            [S6 CLOSING/DELIVERY]  ← delivery_log + ★ Gate S (security audit) + [RELEASE APPROVED] + deployment_log
                  │
             [S7 REVIEW/ASSET]      ← lessons_learned + memory promotion
 ```
@@ -93,8 +93,9 @@ This standard fuses three things into one:
 - **Means**: the `progress.md` ledger + the `scores/*.json` audit trail + score-auditor in-session re-runs + working-tree straggler checks + an assumption audit before entering any major sub-stage.
 
 ### S6 — CLOSING / DELIVERY · VHCP Phase 4–5 · PMBOK Closing
-- **Gate D**: full suite + coverage + mypy green. Monkey Testing ("you never know what a user will do"). `delivery_log.md` QA report.
-- **Deployment gate (hard)**: production requires an explicit **`[RELEASE APPROVED]`** approval + a citation of the delivery verification number. Record in `deployment_log.md`.
+- **Gate D (delivery QA)**: full suite + coverage + mypy green. Monkey Testing ("you never know what a user will do"). `delivery_log.md` QA report.
+- **Gate S (pre-deployment security audit — release-blocking)**: a **whole-system** security pass over the release candidate (secrets scan over the full tree · dependency vulnerability scan · input/boundary validation · authN/authZ · injection/output · error/log leakage · transport/storage · attack surface) with **0 unresolved CRITICAL/HIGH**, and no per-task Stage 4 security finding left deferred. This is a *separate sector* from the per-task Stage 4 `security-reviewer` — it catches what only appears once the pieces are assembled into a deployable whole. Sign off in `delivery_log.md`. Details: [PHASE_GATES.md](PHASE_GATES.md) Gate S · `security_gate.md`.
+- **Deployment gate (hard)**: production requires an explicit **`[RELEASE APPROVED]`** approval + a citation of the delivery verification number **that cites a passed Gate S**. Record in `deployment_log.md`.
 
 ### S7 — REVIEW / ASSETIZATION · VHCP Phase 6
 - **Deliverables**: `docs/retrospective/lessons_learned.md` + **promotion to agent memory (MEMORY.md)**.
@@ -124,4 +125,5 @@ This standard fuses three things into one:
 - **Single source of truth (SSOT)**: the same value/setting lives in one place (`.harness.toml`, `pyproject.toml`). No duplication (the root of drift).
 - **Reuse first**: investigate existing implementations/libraries before writing anything new.
 - **No stopgaps**: discard what's wrong immediately + correct it in one sweep. A deprecated gradual migration = two systems coexisting.
+- **Security at two layers**: per task (Stage 4 `security-reviewer`, every change) **and** once per release (Gate S whole-system audit before the production push). Security is also the 4th axis of every option scorecard (`recommendation_policy.md` §1).
 - **Stability above all**: in a hard-to-access/high-availability environment, errors are absolutely forbidden > recoverability > visibility > maintainability > performance.

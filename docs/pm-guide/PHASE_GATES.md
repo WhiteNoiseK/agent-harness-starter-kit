@@ -47,11 +47,23 @@ Legend: 🟢 pass condition · 🔴 if you don't (a real case from the original 
 - 🔴 Gate forgery (echo "7 passed"), the reverse bias where tests are bent to fit the implementation.
 - 🛡 Permission-separated agents (tests/ only ↔ src/ only) + run_verify + commit-guard re-run (anti-forgery) + `quality-gates.md`.
 
-## Gate D — Delivery / Deployment
+## Gate D — Delivery (staging QA)
 
-- 🟢 Full suite + coverage + mypy green + Monkey Testing + `delivery_log.md` QA report. Production requires **`[RELEASE APPROVED]`** + a delivery verification number.
+- 🟢 Full suite + coverage + mypy green + Monkey Testing + `delivery_log.md` QA report.
 - 🔴 An unverified production push (irrecoverable in a hard-to-access environment).
-- 🛡 `delivery_log.md`/`deployment_log.md` + an approval-token gate.
+- 🛡 `delivery_log.md` + an approval-token gate.
+
+## ★ Gate S — Pre-deployment Security Audit (release-blocking, runs after Gate D, before the production push)
+
+- 🟢 A **whole-system** security pass over the release candidate passes (secrets scan over the full tree · dependency vulnerability scan · input/boundary validation · authN/authZ · injection/output · error/log leakage · transport/storage · attack surface) with **0 unresolved CRITICAL/HIGH**, and **no deferred CRITICAL/HIGH security findings from any per-task Stage 4** remain open. Sign off in `delivery_log.md` (Gate S).
+- 🔴 Shipping a release that is task-by-task clean but whole-system insecure — a secret baked into a build artifact, a newly exposed endpoint, a vulnerable transitive dependency, an auth gap at a module seam. Passing every Stage 4 does **not** imply this gate passes.
+- 🛡 [security_gate.md](security_gate.md) (the single-home checklist + tooling) — distinct from the per-task Stage 4 `security-reviewer`.
+
+## Gate (production) — Deployment
+
+- 🟢 Production requires **`[RELEASE APPROVED]`** + a delivery verification number **that cites a passed Gate S**.
+- 🔴 Approving a push without the security sign-off attached.
+- 🛡 `deployment_log.md` + the approval-token gate.
 
 ## (Closing) — Review / Assetization
 
@@ -69,6 +81,6 @@ S1 Initiating → scope + external-dependency boundaries
 S2 Feasibility→ prove the core technology (spike/study)
 S3 Planning   → ★ freeze the 3 contracts (data definition · output sink · identifier/unit) + WBS/DoD   ← this is the branch point for "the cost of going back to square one"
 S4 Executing  → 6-stage gate per task
-S6 Delivery   → all green + [RELEASE APPROVED]
+S6 Delivery   → Gate D (all green) → ★ Gate S (whole-system security audit) → [RELEASE APPROVED]
 S7 Review     → lessons + memory promotion
 ```

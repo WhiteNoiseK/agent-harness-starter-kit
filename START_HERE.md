@@ -60,7 +60,7 @@ Start with the §3.0 prerequisite check first, and if any MCP/skill is missing, 
     - (if clone-based) [docs/engineering/_TEMPLATE_assumption_leak_audit.md](docs/engineering/_TEMPLATE_assumption_leak_audit.md)
     - + [docs/ai-workflow/plan.md](docs/ai-workflow/plan.md) WBS+DoD. **No entering S4 before Gate P is green** ([docs/pm-guide/PHASE_GATES.md](docs/pm-guide/PHASE_GATES.md)).
 12. **S4 Executing** → the 6-stage gate per task (`/harness-verify` or the procedure in [docs/_harness/quality-gates.md](docs/_harness/quality-gates.md)). Record progress in [docs/ai-workflow/progress.md](docs/ai-workflow/progress.md).
-13. **S6/S7** → delivery (`[RELEASE APPROVED]`) + retrospective/memory promotion.
+13. **S6/S7** → Gate D (delivery QA) → **★ Gate S (pre-deployment security audit, [docs/pm-guide/security_gate.md](docs/pm-guide/security_gate.md))** → `[RELEASE APPROVED]` + retrospective/memory promotion.
 
 ### §3.3 Reporting
 14. On passing each gate, report to the user the current coordinates (S-stage/gate) + the next task. If you lose context, run `context check`.

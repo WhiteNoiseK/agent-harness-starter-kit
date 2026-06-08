@@ -72,6 +72,7 @@ For the mapping to the macro lifecycle (8 stages, including Research/Feasibility
 ### Security
 - Never include secrets, API keys, or passwords in code.
 - Validate all user input.
+- Security is also the 4th axis of every option scorecard (`docs/pm-guide/recommendation_policy.md` §1), reviewed per task at Stage 4 (`security-reviewer`), and audited once per release at **Gate S** before the production push (`docs/pm-guide/security_gate.md`).
 
 ### Communication and Information Gathering
 - Ask before implementing when requirements are unclear.

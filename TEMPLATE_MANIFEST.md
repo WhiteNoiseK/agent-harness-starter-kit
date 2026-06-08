@@ -33,7 +33,8 @@ Status legend: **AS-IS** use as-is · **PARAM** placeholder substitution needed 
 | `PHASE_GATES.md` | **8-gate one-page checklist** — per gate [frozen deliverables / risk if missed / mitigation]. Gate P (3-contract freeze) is central | AS-IS |
 | `STAGE_DEFINITION_RISKS.md` | **Per-stage what-to-define · blast radius · risk-if-undefined (examples) · standard names (V-model/12207/Data Dictionary/ICD)** | AS-IS |
 | `DRIFT_LOCK.md` | **The 22-kind drift lock list** — the answer key for "what drifts" + the baseline-diff ritual | AS-IS |
-| `recommendation_policy.md` | **Recommendation & auto-verification policy** — 3-column scorecard (stability/maintainability/visibility) + the 6 stages auto-run when code changes | AS-IS |
+| `recommendation_policy.md` | **Recommendation & auto-verification policy** — 4-column scorecard (stability/maintainability/visibility/security) + the 6 stages auto-run when code changes | AS-IS |
+| `security_gate.md` | **Gate S — Pre-deployment Security Audit** — release-blocking whole-system security checklist (separate from per-task Stage 4) | AS-IS |
 | `ProductProposal.md` | Initiating-stage charter scaffold | EMPTY 🖊 |
 
 ## C. 6-Stage Gate Engine (`docs/_harness/` · `.claude/` · `scripts/`)
